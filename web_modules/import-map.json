@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "dayjs": "./dayjs.js",
+    "dayjs/plugin/utc": "./dayjs/plugin/utc.js",
+    "ics": "./ics.js",
+    "simple-svelte-autocomplete": "./simple-svelte-autocomplete.js",
+    "svelte/internal": "./svelte/internal.js"
+  }
+}
