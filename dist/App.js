@@ -10,10 +10,12 @@ import {
 	destroy_each,
 	detach,
 	element,
+	empty,
 	init,
 	insert,
 	listen,
 	mount_component,
+	noop,
 	run_all,
 	safe_not_equal,
 	set_data,
@@ -82,6 +84,34 @@ function create_each_block(ctx) {
 	};
 }
 
+// (66:0) {#if selectedCourses.length > 0}
+function create_if_block(ctx) {
+	let button;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			button = element("button");
+			button.textContent = "Download calendar";
+		},
+		m(target, anchor) {
+			insert(target, button, anchor);
+
+			if (!mounted) {
+				dispose = listen(button, "click", /*downloadCalendar*/ ctx[6]);
+				mounted = true;
+			}
+		},
+		p: noop,
+		d(detaching) {
+			if (detaching) detach(button);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
 function create_fragment(ctx) {
 	let h1;
 	let t1;
@@ -96,7 +126,7 @@ function create_fragment(ctx) {
 	let t5;
 	let button1;
 	let t7;
-	let button2;
+	let if_block_anchor;
 	let current;
 	let mounted;
 	let dispose;
@@ -123,6 +153,8 @@ function create_fragment(ctx) {
 		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
 	}
 
+	let if_block = /*selectedCourses*/ ctx[1].length > 0 && create_if_block(ctx);
+
 	return {
 		c() {
 			h1 = element("h1");
@@ -143,8 +175,8 @@ function create_fragment(ctx) {
 			button1 = element("button");
 			button1.textContent = "reset";
 			t7 = space();
-			button2 = element("button");
-			button2.textContent = "Download calendar";
+			if (if_block) if_block.c();
+			if_block_anchor = empty();
 			button0.disabled = button0_disabled_value = !/*selectedCourse*/ ctx[0];
 		},
 		m(target, anchor) {
@@ -164,14 +196,14 @@ function create_fragment(ctx) {
 			insert(target, t5, anchor);
 			insert(target, button1, anchor);
 			insert(target, t7, anchor);
-			insert(target, button2, anchor);
+			if (if_block) if_block.m(target, anchor);
+			insert(target, if_block_anchor, anchor);
 			current = true;
 
 			if (!mounted) {
 				dispose = [
 					listen(button0, "click", /*addCourse*/ ctx[3]),
-					listen(button1, "click", /*reset*/ ctx[5]),
-					listen(button2, "click", /*downloadCalendar*/ ctx[6])
+					listen(button1, "click", /*reset*/ ctx[5])
 				];
 
 				mounted = true;
@@ -214,6 +246,19 @@ function create_fragment(ctx) {
 
 				each_blocks.length = each_value.length;
 			}
+
+			if (/*selectedCourses*/ ctx[1].length > 0) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+				} else {
+					if_block = create_if_block(ctx);
+					if_block.c();
+					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+				}
+			} else if (if_block) {
+				if_block.d(1);
+				if_block = null;
+			}
 		},
 		i(local) {
 			if (current) return;
@@ -236,7 +281,8 @@ function create_fragment(ctx) {
 			if (detaching) detach(t5);
 			if (detaching) detach(button1);
 			if (detaching) detach(t7);
-			if (detaching) detach(button2);
+			if (if_block) if_block.d(detaching);
+			if (detaching) detach(if_block_anchor);
 			mounted = false;
 			run_all(dispose);
 		}
