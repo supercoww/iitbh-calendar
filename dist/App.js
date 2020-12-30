@@ -3,6 +3,7 @@ import {
 	SvelteComponent,
 	add_flush_callback,
 	append,
+	attr,
 	bind,
 	binding_callbacks,
 	create_component,
@@ -36,7 +37,68 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (56:2) {#each selectedCourses as course, idx}
+// (55:0) {#if selectedCourse}
+function create_if_block_1(ctx) {
+	let pre;
+	let t0;
+	let t1_value = /*selectedCourse*/ ctx[0].lecture + "";
+	let t1;
+	let t2;
+	let a;
+	let t3_value = /*selectedCourse*/ ctx[0].link + "";
+	let t3;
+	let a_href_value;
+	let t4;
+	let t5_value = /*selectedCourse*/ ctx[0].instructor + "";
+	let t5;
+	let t6;
+	let t7_value = /*selectedCourse*/ ctx[0].credits + "";
+	let t7;
+
+	return {
+		c() {
+			pre = element("pre");
+			t0 = text("Slot: ");
+			t1 = text(t1_value);
+			t2 = text("\r\nLink: ");
+			a = element("a");
+			t3 = text(t3_value);
+			t4 = text("\r\nInstructor: ");
+			t5 = text(t5_value);
+			t6 = text("\r\nCredits: ");
+			t7 = text(t7_value);
+			attr(a, "href", a_href_value = /*selectedCourse*/ ctx[0].link);
+		},
+		m(target, anchor) {
+			insert(target, pre, anchor);
+			append(pre, t0);
+			append(pre, t1);
+			append(pre, t2);
+			append(pre, a);
+			append(a, t3);
+			append(pre, t4);
+			append(pre, t5);
+			append(pre, t6);
+			append(pre, t7);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*selectedCourse*/ 1 && t1_value !== (t1_value = /*selectedCourse*/ ctx[0].lecture + "")) set_data(t1, t1_value);
+			if (dirty & /*selectedCourse*/ 1 && t3_value !== (t3_value = /*selectedCourse*/ ctx[0].link + "")) set_data(t3, t3_value);
+
+			if (dirty & /*selectedCourse*/ 1 && a_href_value !== (a_href_value = /*selectedCourse*/ ctx[0].link)) {
+				attr(a, "href", a_href_value);
+			}
+
+			if (dirty & /*selectedCourse*/ 1 && t5_value !== (t5_value = /*selectedCourse*/ ctx[0].instructor + "")) set_data(t5, t5_value);
+			if (dirty & /*selectedCourse*/ 1 && t7_value !== (t7_value = /*selectedCourse*/ ctx[0].credits + "")) set_data(t7, t7_value);
+		},
+		d(detaching) {
+			if (detaching) detach(pre);
+		}
+	};
+}
+
+// (66:2) {#each selectedCourses as course, idx}
 function create_each_block(ctx) {
 	let li;
 	let t0_value = /*course*/ ctx[9].label + "";
@@ -84,7 +146,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (66:0) {#if selectedCourses.length > 0}
+// (76:0) {#if selectedCourses.length > 0}
 function create_if_block(ctx) {
 	let button;
 	let mounted;
@@ -122,11 +184,12 @@ function create_fragment(ctx) {
 	let t3;
 	let button0_disabled_value;
 	let t4;
-	let ul;
 	let t5;
+	let ul;
+	let t6;
 	let button1;
-	let t7;
-	let if_block_anchor;
+	let t8;
+	let if_block1_anchor;
 	let current;
 	let mounted;
 	let dispose;
@@ -146,6 +209,7 @@ function create_fragment(ctx) {
 
 	autocomplete = new AutoComplete({ props: autocomplete_props });
 	binding_callbacks.push(() => bind(autocomplete, "selectedItem", autocomplete_selectedItem_binding));
+	let if_block0 = /*selectedCourse*/ ctx[0] && create_if_block_1(ctx);
 	let each_value = /*selectedCourses*/ ctx[1];
 	let each_blocks = [];
 
@@ -153,7 +217,7 @@ function create_fragment(ctx) {
 		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
 	}
 
-	let if_block = /*selectedCourses*/ ctx[1].length > 0 && create_if_block(ctx);
+	let if_block1 = /*selectedCourses*/ ctx[1].length > 0 && create_if_block(ctx);
 
 	return {
 		c() {
@@ -165,18 +229,20 @@ function create_fragment(ctx) {
 			button0 = element("button");
 			t3 = text("Add");
 			t4 = space();
+			if (if_block0) if_block0.c();
+			t5 = space();
 			ul = element("ul");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			t5 = space();
+			t6 = space();
 			button1 = element("button");
 			button1.textContent = "reset";
-			t7 = space();
-			if (if_block) if_block.c();
-			if_block_anchor = empty();
+			t8 = space();
+			if (if_block1) if_block1.c();
+			if_block1_anchor = empty();
 			button0.disabled = button0_disabled_value = !/*selectedCourse*/ ctx[0];
 		},
 		m(target, anchor) {
@@ -187,17 +253,19 @@ function create_fragment(ctx) {
 			insert(target, button0, anchor);
 			append(button0, t3);
 			insert(target, t4, anchor);
+			if (if_block0) if_block0.m(target, anchor);
+			insert(target, t5, anchor);
 			insert(target, ul, anchor);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].m(ul, null);
 			}
 
-			insert(target, t5, anchor);
+			insert(target, t6, anchor);
 			insert(target, button1, anchor);
-			insert(target, t7, anchor);
-			if (if_block) if_block.m(target, anchor);
-			insert(target, if_block_anchor, anchor);
+			insert(target, t8, anchor);
+			if (if_block1) if_block1.m(target, anchor);
+			insert(target, if_block1_anchor, anchor);
 			current = true;
 
 			if (!mounted) {
@@ -224,6 +292,19 @@ function create_fragment(ctx) {
 				button0.disabled = button0_disabled_value;
 			}
 
+			if (/*selectedCourse*/ ctx[0]) {
+				if (if_block0) {
+					if_block0.p(ctx, dirty);
+				} else {
+					if_block0 = create_if_block_1(ctx);
+					if_block0.c();
+					if_block0.m(t5.parentNode, t5);
+				}
+			} else if (if_block0) {
+				if_block0.d(1);
+				if_block0 = null;
+			}
+
 			if (dirty & /*deleteCourse, selectedCourses*/ 18) {
 				each_value = /*selectedCourses*/ ctx[1];
 				let i;
@@ -248,16 +329,16 @@ function create_fragment(ctx) {
 			}
 
 			if (/*selectedCourses*/ ctx[1].length > 0) {
-				if (if_block) {
-					if_block.p(ctx, dirty);
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
 				} else {
-					if_block = create_if_block(ctx);
-					if_block.c();
-					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+					if_block1 = create_if_block(ctx);
+					if_block1.c();
+					if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
 				}
-			} else if (if_block) {
-				if_block.d(1);
-				if_block = null;
+			} else if (if_block1) {
+				if_block1.d(1);
+				if_block1 = null;
 			}
 		},
 		i(local) {
@@ -276,13 +357,15 @@ function create_fragment(ctx) {
 			if (detaching) detach(t2);
 			if (detaching) detach(button0);
 			if (detaching) detach(t4);
+			if (if_block0) if_block0.d(detaching);
+			if (detaching) detach(t5);
 			if (detaching) detach(ul);
 			destroy_each(each_blocks, detaching);
-			if (detaching) detach(t5);
+			if (detaching) detach(t6);
 			if (detaching) detach(button1);
-			if (detaching) detach(t7);
-			if (if_block) if_block.d(detaching);
-			if (detaching) detach(if_block_anchor);
+			if (detaching) detach(t8);
+			if (if_block1) if_block1.d(detaching);
+			if (detaching) detach(if_block1_anchor);
 			mounted = false;
 			run_all(dispose);
 		}

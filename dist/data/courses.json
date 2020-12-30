@@ -77,7 +77,7 @@
 		"credits": 4,
 		"lecture": "NA",
 		"link": "NA",
-		"instructor": "Dr. Soumajit"
+		"instructor": "Dr. Soumajit Pramanik"
 	},
 	{
 		"code": "CS250",
@@ -126,6 +126,22 @@
 		"lecture": "NA",
 		"link": "NA",
 		"instructor": "DUGC EECS"
+	},
+	{
+		"code": "CS500",
+		"name": "Science of Computing",
+		"credits": 3,
+		"lecture": "B13",
+		"link": "https://iitbhilai.webex.com/meet/b203",
+		"instructor": "Dr. Souradyuti Paul"
+	},
+	{
+		"code": "CS501",
+		"name": "Computer Systems",
+		"credits": 3,
+		"lecture": "B46",
+		"link": "https://iitbhilai.webex.com/meet/b203",
+		"instructor": "Prof. Santosh Biswas"
 	},
 	{
 		"code": "CS503",
@@ -528,6 +544,14 @@
 		"instructor": "DPGC EECS"
 	},
 	{
+		"code": "EE798",
+		"name": "Independent Study: Power System\n",
+		"credits": 6,
+		"lecture": "NA",
+		"link": "NA",
+		"instructor": "Dr. Prashant Agnihotri"
+	},
+	{
 		"code": "EE799",
 		"name": "Thesis",
 		"credits": "6 to 24",
@@ -659,7 +683,7 @@
 		"code": "LA353",
 		"name": "Experiencing the Indian University",
 		"credits": 2,
-		"lecture": 12,
+		"lecture": "J12",
 		"link": "https://iitbhilai.webex.com/meet/b104",
 		"instructor": "Dr. Anubhav Pradhan"
 	},
@@ -971,8 +995,8 @@
 		"code": "ME654",
 		"name": "Advanced Materials - Development\n",
 		"credits": 6,
-		"lecture": "A16",
-		"link": "https://iitbhilai.webex.com/meet/b102",
+		"lecture": "NA",
+		"link": "NA",
 		"instructor": "Dr. Jose Immanuel R"
 	},
 	{
@@ -982,6 +1006,22 @@
 		"lecture": "NA",
 		"link": "NA",
 		"instructor": "DPGC ME"
+	},
+	{
+		"code": "ME798",
+		"name": "Independent Study: Macromachining",
+		"credits": 6,
+		"lecture": "NA",
+		"link": "NA",
+		"instructor": "Dr. Soumya Gangopadhyay"
+	},
+	{
+		"code": "ME798",
+		"name": "Independent Study: The Science and\n",
+		"credits": 6,
+		"lecture": "NA",
+		"link": "NA",
+		"instructor": "Dr. Kaushik Bandyopadhyay"
 	},
 	{
 		"code": "ME799",
